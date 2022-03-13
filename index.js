@@ -156,8 +156,8 @@ app.get('/', (req, res) => {
 })
 
 app.post('/webhook', (req, res) => {
+  console.log(res.body);
     let puNumber = req.body.pu.split('/')
-    console.log(res.body);
     if (!puNumber) {
       res.send({text: 'You didn\'t supply a PU number. Check the example key for a sample usecase', example: 'POST / https://sye-bknd.herokuapp.com {pu: 26/18/67/09}'})
     }
