@@ -54,6 +54,9 @@ function abbreviate (phrase, delimiter = '') {
 
 app.get('/', (req, res) => {
     let puNumber = req.query.pu.split('/')
+    if (!puNumber) {
+      res.send({text: 'You didn\'t supply a PU number. Check the example key for a sample usecase', example: 'https://sye-bknd.herokuapp.com/?pu=26/18/67/09'})
+    }
     let governor = null
     let lgtMan = null
     let state = ''
