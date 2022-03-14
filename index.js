@@ -260,7 +260,7 @@ app.post('/webhook', (req, res) => {
           res.send({
             "preview_url": false | true,
             "recipient_type": "individual",
-            "to": res.body[0].from,
+            "to": req.body[0].from,
             "type": "text",
             "text": {
                 "body": "Enter Your PU number"
@@ -272,7 +272,7 @@ app.post('/webhook', (req, res) => {
           res.send({
             "preview_url": false | true,
             "recipient_type": "individual",
-            "to": res.body[0].from,
+            "to": req.body[0].from,
             "type": "text",
             "text": {
                 "body": "Correct Guy"
