@@ -257,6 +257,8 @@ app.post('/webhook', (req, res) => {
     //     console.log(userResponse);
     //     // res.send(userResponse)
         if (req.body.messages[0].text.body == 5) {
+          res.setHeader('X-Turn-Hook-Subscription', 'whatsapp')
+          res.setHeader('X-WhatsApp-Id', req.body.messages[0].id)
           res.send({
             "preview_url": false | true,
             "recipient_type": "individual",
@@ -269,6 +271,8 @@ app.post('/webhook', (req, res) => {
         }
 
         if (req.body.messages[0].text.body.includes('/')) {
+          res.setHeader('X-Turn-Hook-Subscription', 'whatsapp')
+          res.setHeader('X-WhatsApp-Id', req.body.messages[0].id)
           res.send({
             "preview_url": false | true,
             "recipient_type": "individual",
