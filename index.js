@@ -256,11 +256,11 @@ app.post('/webhook', (req, res) => {
     //     // Log user response
     //     console.log(userResponse);
     //     // res.send(userResponse)
-        if (req.body[0].text.body == 5) {
+        if (req.messages[0].text.body == 5) {
           res.send({
             "preview_url": false | true,
             "recipient_type": "individual",
-            "to": req.body[0].from,
+            "to": req.messages[0].from,
             "type": "text",
             "text": {
                 "body": "Enter Your PU number"
@@ -268,11 +268,11 @@ app.post('/webhook', (req, res) => {
         })
         }
 
-        if (req.body[0].text.body.includes('/')) {
+        if (req.messages[0].text.body.includes('/')) {
           res.send({
             "preview_url": false | true,
             "recipient_type": "individual",
-            "to": req.body[0].from,
+            "to": req.messages[0].from,
             "type": "text",
             "text": {
                 "body": "Correct Guy"
