@@ -272,7 +272,7 @@ app.post('/webhook', (req, res) => {
           res.send({
             "preview_url": false | true,
             "recipient_type": "individual",
-            "to": res.body.contacts[0].wa_id,
+            "to": res.body.from,
             "type": "text",
             "text": {
                 "body": "Correct Guy"
