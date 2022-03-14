@@ -256,7 +256,7 @@ app.post('/webhook', (req, res) => {
     //     // Log user response
     //     console.log(userResponse);
     //     // res.send(userResponse)
-        if (res.body.messages[0].text.body == 5) {
+        if (req.body.messages[0].text.body == 5) {
           res.send({
             "preview_url": false | true,
             "recipient_type": "individual",
@@ -268,7 +268,7 @@ app.post('/webhook', (req, res) => {
         })
         }
 
-        if (res.body.messages[0].text.body.includes('/')) {
+        if (req.body.messages[0].text.body.includes('/')) {
           res.send({
             "preview_url": false | true,
             "recipient_type": "individual",
