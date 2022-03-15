@@ -52,7 +52,7 @@ function abbreviate (phrase, delimiter = '') {
   return phrase.split(' ').map(word => word.slice(0, 1)).join(delimiter)
 }
 
-async function getData (puNumber) {
+async function getData (puNumber, doneFn) {
   
 
   let governor = null
@@ -148,13 +148,9 @@ async function getData (puNumber) {
 
       // Log user response
       console.log(userResponse);
-      return new Promise((resolve, reject) => {
         if (userResponse.governor.name) {
-          resolve(userResponse)
-        } else {
-          reject({wahala: true})
-        }
-      })
+          doneFn(userResponse)
+        } 
     })
   }) 
 }
@@ -172,7 +168,7 @@ app.post('/webhook', (req, res) => {
     res.status(200).json({message: 'OK'})
     sendMessage(req.body.messages[0].from, 'One moment while we fetch that information. \nType *Menu* to return to the main screen.')
 
-      getData(puNumber).then(userResponse => {
+      getData(puNumber, (userResponse) => {
         // if (userResponse.governor) {
           let messageBody = `
           Your PU Number is ${puNumber.join('')}
