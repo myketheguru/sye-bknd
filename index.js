@@ -257,6 +257,7 @@ app.post('/webhook', (req, res) => {
     //     console.log(userResponse);
     //     // res.send(userResponse)
         if (req.body.messages[0].text.body == 5) {
+          res.status(200).json({message: 'OK'})
           sendMessage(req.body.messages[0].from, 'Enter your PU Number')
         }
 
@@ -298,7 +299,7 @@ function sendMessage(contact_id, content) {
           console.log(response)
       })
       .catch(err => {
-          console.log(err);
+          // console.log(err);
       })
   }
   
