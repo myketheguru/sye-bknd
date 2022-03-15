@@ -148,10 +148,13 @@ async function getData (puNumber) {
 
       // Log user response
       console.log(userResponse);
-      if (userResponse.governor.name) {
-        console.log('Dooooooooooooooonnnnne');
-        return userResponse
-      }
+      return new Promise((resolve, reject) => {
+        if (userResponse.governor.name) {
+          resolve(userResponse)
+        } else {
+          reject({wahala: true})
+        }
+      })
     })
   }) 
 }
