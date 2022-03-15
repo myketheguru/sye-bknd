@@ -156,7 +156,7 @@ app.get('/', (req, res) => {
 })
 
 app.post('/webhook', (req, res) => {
-  console.log(req.body, 'value');
+  console.log(req.body.messages, 'value');
     // let puNumber = req.body.pu.split('/')
     // let puNumber
     // if (!puNumber) {
@@ -264,6 +264,7 @@ app.post('/webhook', (req, res) => {
         // }
 
         if (req.body.messages[req.body.messages.length - 1].text.body.split('/').length === 4) {
+          console.log(req.body.messages[req.body.messages.length - 1].text);
           res.status(200).json({message: 'OK'})
           sendMessage(req.body.messages[0].from, 'Some data here')
           console.log('Msg sent');
