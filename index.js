@@ -263,12 +263,14 @@ app.post('/webhook', (req, res) => {
         //   console.log('Msg sent');
         // }
 
-        // if (req.body.messages[0].text.body.split('/').length === 4) {
-        //   res.status(200).json({message: 'OK'})
-        //   console.log('Before');
-        //   sendMessage(req.body.messages[0].from, 'Enter your PU Number')
-        //   console.log('Msg sent');
-        // }
+        if (req.body.messages[req.body.messages.length - 1].text.body.split('/').length === 4) {
+          res.status(200).json({message: 'OK'})
+          sendMessage(req.body.messages[0].from, 'Some data here')
+          console.log('Msg sent');
+        } else {
+          res.status(200).json({message: 'OK'})
+          sendMessage(req.body.messages[0].from, 'We could not get any data for this PU Number. Please check to see if the PU number you entered is correct')
+        }
       // })
     // }) 
 })
