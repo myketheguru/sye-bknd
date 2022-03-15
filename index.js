@@ -148,7 +148,10 @@ async function getData (puNumber) {
 
       // Log user response
       console.log(userResponse);
-      return userResponse
+      if (userResponse.governor.name) {
+        console.log('Dooooooooooooooonnnnne');
+        return userResponse
+      }
     })
   }) 
 }
