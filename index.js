@@ -159,7 +159,7 @@ app.post('/webhook', (req, res) => {
   console.log(req.body.messages[req.body.messages.length - 1].text.body, 'value');
   let puNumber = req.body.messages[req.body.messages.length - 1].text.body.split('/')
 
-  if (puNumber.length === 4 && puNumber.every(num => parseFloat(num) !== NaN)) {
+  if (puNumber.length === 4 && puNumber.every(num => !Number.isNaN(parseFloat(num)))) {
     res.status(200).json({message: 'OK'})
     sendMessage(req.body.messages[0].from, 'One moment while we fetch that information. \nType *Menu* to return to the main screen.')
 
