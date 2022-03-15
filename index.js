@@ -163,7 +163,7 @@ app.get('/', async (req, res) => {
     res.send(await getData(puNumber))
 })
 
-app.post('/webhook', (req, res) => {
+app.post('/webhook', async (req, res) => {
   console.log(req.body.messages[req.body.messages.length - 1].text.body, 'value');
   let puNumber = req.body.messages[req.body.messages.length - 1].text.body.split('/')
 
@@ -171,7 +171,6 @@ app.post('/webhook', (req, res) => {
     res.status(200).json({message: 'OK'})
     sendMessage(req.body.messages[0].from, 'One moment while we fetch that information. \nType *Menu* to return to the main screen.')
 
-    (async (sendMessage) => {
       let userResponse = await getData(puNumber)
       if (userResponse.governor) {
         let messageBody = `
@@ -227,7 +226,6 @@ app.post('/webhook', (req, res) => {
         sendMessage(req.body.messages[0].from, messageBody)
         console.log('Msg sent');
       } 
-    })(sendMessage)
 
   } else {
     res.status(200).json({message: 'OK'})
