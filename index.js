@@ -156,7 +156,7 @@ app.get('/', (req, res) => {
 })
 
 app.post('/webhook', (req, res) => {
-  console.log(req.body.messages, 'value');
+  console.log(req.body, 'value');
     // let puNumber = req.body.pu.split('/')
     // let puNumber
     // if (!puNumber) {
@@ -256,27 +256,19 @@ app.post('/webhook', (req, res) => {
     //     // Log user response
     //     console.log(userResponse);
     //     // res.send(userResponse)
-        if (req.body.messages[0].text.body == 5) {
-          res.status(200).json({message: 'OK'})
-          console.log('Before');
-          sendMessage(req.body.messages[0].from, 'Enter your PU Number')
-          console.log('Msg sent');
-        }
+        // if (req.body.messages[0].text.body == 5) {
+        //   res.status(200).json({message: 'OK'})
+        //   console.log('Before');
+        //   sendMessage(req.body.messages[0].from, 'Enter your PU Number')
+        //   console.log('Msg sent');
+        // }
 
-        if (req.body.messages[0].text.body.split('/').length === 4) {
-          res.setHeader('Authorization', `bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJUdXJuIiwiZXhwIjoxNjc4ODU0OTk1LCJpYXQiOjE2NDczMTkwMzYsImlzcyI6IlR1cm4iLCJqdGkiOiIyNTNjMGU0Ni05OGU4LTRhZWYtYjc1ZS0zNmQ2ZDg5ZTk4NzciLCJuYmYiOjE2NDczMTkwMzUsInN1YiI6Im51bWJlcjoyNzY3IiwidHlwIjoiYWNjZXNzIn0.-DVZKHpEZ68laHCCzy4ZVcAsxvsimsyOuo0k99Sd-wqsfZof82EF_7icq9eJtkiea_M1u0mCk4VJHdVkq8Vhdw`)
-          res.setHeader('Content-Type', 'application/json')
-          res.setHeader('X-WhatsApp-Id', req.body.messages[0].id)
-          res.send({
-            "preview_url": false,
-            "recipient_type": "individual",
-            "to": req.body.messages[0].from,
-            "type": "text",
-            "text": {
-                "body": "Correct Guy"
-            }
-        })
-        }
+        // if (req.body.messages[0].text.body.split('/').length === 4) {
+        //   res.status(200).json({message: 'OK'})
+        //   console.log('Before');
+        //   sendMessage(req.body.messages[0].from, 'Enter your PU Number')
+        //   console.log('Msg sent');
+        // }
       // })
     // }) 
 })
