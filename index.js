@@ -265,10 +265,12 @@ app.post('/webhook', (req, res) => {
 
         if (req.body.messages[req.body.messages.length - 1].text.body.split('/').length === 4) {
           res.status(200).json({message: 'OK'})
-          sendMessage(req.body.messages[0].from, 'One moment while we fetch that information. \nType *Menu* to return to the main screen.')
+          sendMessage(req.body.messages[0].from, 'One moment while we fetch that information. \nType *Menu* to return to the main screen.', function (done) {
+            res.status(200).json({message: 'OK'})
+            sendMessage(req.body.messages[0].from, 'Some data here')
+            console.log('Msg sent');
+          })
 
-          sendMessage(req.body.messages[0].from, 'Some data here')
-          console.log('Msg sent');
         } else {
           res.status(200).json({message: 'OK'})
           sendMessage(req.body.messages[0].from, 'We could not get any data for this PU Number. Please check to see if the PU number you entered is correct')
@@ -280,7 +282,7 @@ app.post('/webhook', (req, res) => {
 // const TURN_TOKEN = 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJUdXJuIiwiZXhwIjoxNjc4ODU0OTk1LCJpYXQiOjE2NDczMTkwMzYsImlzcyI6IlR1cm4iLCJqdGkiOiIyNTNjMGU0Ni05OGU4LTRhZWYtYjc1ZS0zNmQ2ZDg5ZTk4NzciLCJuYmYiOjE2NDczMTkwMzUsInN1YiI6Im51bWJlcjoyNzY3IiwidHlwIjoiYWNjZXNzIn0.-DVZKHpEZ68laHCCzy4ZVcAsxvsimsyOuo0k99Sd-wqsfZof82EF_7icq9eJtkiea_M1u0mCk4VJHdVkq8Vhdw';
 const TURN_TOKEN = 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJUdXJuIiwiZXhwIjoxNjc4ODY1NTkxLCJpYXQiOjE2NDczMjk2MjAsImlzcyI6IlR1cm4iLCJqdGkiOiIwMWU5OGQ2ZC03YWU2LTQ3NGYtOTg1My0xMmRiYjg5MzA0MmUiLCJuYmYiOjE2NDczMjk2MTksInN1YiI6Im51bWJlcjoyMDI2IiwidHlwIjoiYWNjZXNzIn0.msEwjszLOOtNurFfIGpoQLhrg69y_9EEnjQKe1CXao2cO7cCLwZfyNeHagr7uah8P2TNRuHyvRD-DX7MB8INeQ';
 
-function sendMessage(contact_id, content) {
+function sendMessage(contact_id, content, done) {
       axios.post("https://whatsapp.turn.io/v1/messages",{
           "recipient_type": "individual",
           "to": contact_id,
@@ -296,6 +298,7 @@ function sendMessage(contact_id, content) {
       })
       .then(response => {
           console.log(response.data, 'Response Recieved')
+          done(true)
       })
       .catch(err => {
           // console.log(err);
