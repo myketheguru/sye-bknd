@@ -171,7 +171,7 @@ app.post('/webhook', (req, res) => {
     res.status(200).json({message: 'OK'})
     sendMessage(req.body.messages[0].from, 'One moment while we fetch that information. \nType *Menu* to return to the main screen.')
 
-    (async () => {
+    (async (sendMessage) => {
       let userResponse = await getData(puNumber)
       if (userResponse.governor) {
         let messageBody = `
@@ -221,13 +221,13 @@ app.post('/webhook', (req, res) => {
         If your PU number is not available, visit www.shineyoureye.org
         
         Type Menu to go back to the main menu.
-        `
+        `;
 
         // Send the message
         sendMessage(req.body.messages[0].from, messageBody)
         console.log('Msg sent');
       } 
-    })()
+    })(sendMessage)
 
   } else {
     res.status(200).json({message: 'OK'})
