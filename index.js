@@ -171,7 +171,7 @@ app.post('/webhook', (req, res) => {
       getData(puNumber, (userResponse) => {
         // if (userResponse.governor) {
           let messageBody = `
-          Your PU Number is ${puNumber.join('')}
+          Your PU Number is ${puNumber.join('/')}
   
           Your elected officials are:
           
@@ -188,13 +188,14 @@ app.post('/webhook', (req, res) => {
           Party: ${userResponse?.local_government_chairman?.party}
           Phone: ${userResponse?.local_government_chairman?.phone}
           
-          Your State Assembly Members
+          Your State Assembly Member (1)
           Area: ${userResponse?.house_of_assembly[0]?.area}
           Name: ${userResponse?.house_of_assembly[0]?.name}
           Party: ${userResponse?.house_of_assembly[0]?.party}
           Phone: ${userResponse?.house_of_assembly[0]?.phone}
           Email: ${userResponse?.house_of_assembly[0]?.email}
           
+          Your State Assembly Member (2)
           Area: ${userResponse?.house_of_assembly[1]?.area ?? 'N/A'}
           Name: ${userResponse?.house_of_assembly[1]?.name ?? 'N/A'}
           Party: ${userResponse?.house_of_assembly[1]?.party ?? 'N/A'}
