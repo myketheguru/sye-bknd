@@ -156,7 +156,7 @@ app.get('/', (req, res) => {
 })
 
 app.post('/webhook', (req, res) => {
-  console.log(req.body.messages, 'value');
+  console.log(req.body.messages[req.body.messages.length - 1], 'value');
     // let puNumber = req.body.pu.split('/')
     // let puNumber
     // if (!puNumber) {
