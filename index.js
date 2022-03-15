@@ -174,43 +174,43 @@ app.post('/webhook', (req, res) => {
           Your elected officials are:
           
           Your Governor
-          Name: ${userResponse.governor.name}
-          Party: ${userResponse.governor.party}
-          Phone: ${userResponse.governor.phone ?? 'N/A'}
-          Email: ${userResponse.governor.email ?? 'N/A'}
-          Twitter: ${userResponse.governor.twitter}
+          Name: ${userResponse?.governor?.name}
+          Party: ${userResponse?.governor?.party}
+          Phone: ${userResponse?.governor?.phone ?? 'N/A'}
+          Email: ${userResponse?.governor?.email ?? 'N/A'}
+          Twitter: ${userResponse?.governor?.twitter}
           
           Your Local Government Chairman
-          LGA: ${userResponse.local_government_chairman.area}
-          Name: ${userResponse.local_government_chairman.name}
-          Party: ${userResponse.local_government_chairman.party}
-          Phone: ${userResponse.local_government_chairman.phone}
+          LGA: ${userResponse?.local_government_chairman?.area}
+          Name: ${userResponse?.local_government_chairman?.name}
+          Party: ${userResponse?.local_government_chairman?.party}
+          Phone: ${userResponse?.local_government_chairman?.phone}
           
           Your State Assembly Members
-          Area: ${userResponse.house_of_assembly[0].area}
-          Name: ${userResponse.house_of_assembly[0].name}
-          Party: ${userResponse.house_of_assembly[0].party}
-          Phone: ${userResponse.house_of_assembly[0].phone}
-          Email: ${userResponse.house_of_assembly[0].email}
+          Area: ${userResponse?.house_of_assembly[0]?.area}
+          Name: ${userResponse?.house_of_assembly[0]?.name}
+          Party: ${userResponse?.house_of_assembly[0]?.party}
+          Phone: ${userResponse?.house_of_assembly[0]?.phone}
+          Email: ${userResponse?.house_of_assembly[0]?.email}
           
-          Area: ${userResponse.house_of_assembly[1]?.area ?? 'N/A'}
-          Name: ${userResponse.house_of_assembly[1]?.name ?? 'N/A'}
-          Party: ${userResponse.house_of_assembly[1]?.party ?? 'N/A'}
-          Phone: ${userResponse.house_of_assembly[1]?.phone ?? 'N/A'}
-          Email: ${userResponse.house_of_assembly[1]?.email ?? 'N/A'}
+          Area: ${userResponse?.house_of_assembly[1]?.area ?? 'N/A'}
+          Name: ${userResponse?.house_of_assembly[1]?.name ?? 'N/A'}
+          Party: ${userResponse?.house_of_assembly[1]?.party ?? 'N/A'}
+          Phone: ${userResponse?.house_of_assembly[1]?.phone ?? 'N/A'}
+          Email: ${userResponse?.house_of_assembly[1]?.email ?? 'N/A'}
           
           Your Senator
-          Name: ${userResponse.senator.name}
-          Party: ${userResponse.senator.party}
-          Phone: ${userResponse.senator.phone ?? 'N/A'}
-          Email: ${userResponse.senator.email ?? 'N/A'}
-          Twitter: ${userResponse.senator.twitter}
+          Name: ${userResponse?.senator?.name}
+          Party: ${userResponse?.senator?.party}
+          Phone: ${userResponse?.senator?.phone ?? 'N/A'}
+          Email: ${userResponse?.senator?.email ?? 'N/A'}
+          Twitter: ${userResponse?.senator?.twitter}
           
           Your House of Reps. Member
-          Name: ${userResponse.house_of_representatives.name}
-          Party: ${userResponse.house_of_representatives.party}
-          Phone: ${userResponse.house_of_representatives.phone ?? 'N/A'}
-          Email: ${userResponse.house_of_representatives.email ?? 'N/A'}
+          Name: ${userResponse?.house_of_representatives?.name}
+          Party: ${userResponse?.house_of_representatives?.party}
+          Phone: ${userResponse?.house_of_representatives?.phone ?? 'N/A'}
+          Email: ${userResponse?.house_of_representatives?.email ?? 'N/A'}
           
           If your PU number is not available, visit www.shineyoureye.org
           
