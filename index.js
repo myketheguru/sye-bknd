@@ -258,7 +258,9 @@ app.post('/webhook', (req, res) => {
     //     // res.send(userResponse)
         if (req.body.messages[0].text.body == 5) {
           res.status(200).json({message: 'OK'})
+          console.log('Before');
           sendMessage(req.body.messages[0].from, 'Enter your PU Number')
+          console.log('Msg sent');
         }
 
         if (req.body.messages[0].text.body.split('/').length === 4) {
