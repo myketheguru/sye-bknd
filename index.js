@@ -225,6 +225,7 @@ app.post('/webhook', (req, res) => {
           console.log('Msg sent');
         // } 
         console.log(userResponse, 'This is the f***king response')
+        console.log(messageBody, 'This is the f***king message')
       })
 
   } else {
