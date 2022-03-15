@@ -294,7 +294,7 @@ function sendMessage(contact_id, content) {
           }
       })
       .then(response => {
-          console.log(response)
+          console.log(response.data, 'Response Recieved')
       })
       .catch(err => {
           // console.log(err);
