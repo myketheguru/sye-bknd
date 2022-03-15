@@ -257,10 +257,12 @@ app.post('/webhook', (req, res) => {
     //     console.log(userResponse);
     //     // res.send(userResponse)
         if (req.body.messages[0].text.body == 5) {
-          res.setHeader('X-Turn-Hook-Subscription', 'turn')
-          res.setHeader('X-WhatsApp-Id', req.body.messages[0].id)
+          res.setHeader('Authorization', `bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJUdXJuIiwiZXhwIjoxNjc4ODU0OTk1LCJpYXQiOjE2NDczMTkwMzYsImlzcyI6IlR1cm4iLCJqdGkiOiIyNTNjMGU0Ni05OGU4LTRhZWYtYjc1ZS0zNmQ2ZDg5ZTk4NzciLCJuYmYiOjE2NDczMTkwMzUsInN1YiI6Im51bWJlcjoyNzY3IiwidHlwIjoiYWNjZXNzIn0.-DVZKHpEZ68laHCCzy4ZVcAsxvsimsyOuo0k99Sd-wqsfZof82EF_7icq9eJtkiea_M1u0mCk4VJHdVkq8Vhdw
+          `)
+          res.setHeader('Content-Type', 'application/json')
+          // res.setHeader('X-WhatsApp-Id', req.body.messages[0].id)
           res.send({
-            "preview_url": false | true,
+            "preview_url": false,
             "recipient_type": "individual",
             "to": req.body.messages[0].from,
             "type": "text",
@@ -271,10 +273,12 @@ app.post('/webhook', (req, res) => {
         }
 
         if (req.body.messages[0].text.body.split('/').length === 4) {
-          res.setHeader('X-Turn-Hook-Subscription', 'turn')
+          res.setHeader('Authorization', `bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJUdXJuIiwiZXhwIjoxNjc4ODU0OTk1LCJpYXQiOjE2NDczMTkwMzYsImlzcyI6IlR1cm4iLCJqdGkiOiIyNTNjMGU0Ni05OGU4LTRhZWYtYjc1ZS0zNmQ2ZDg5ZTk4NzciLCJuYmYiOjE2NDczMTkwMzUsInN1YiI6Im51bWJlcjoyNzY3IiwidHlwIjoiYWNjZXNzIn0.-DVZKHpEZ68laHCCzy4ZVcAsxvsimsyOuo0k99Sd-wqsfZof82EF_7icq9eJtkiea_M1u0mCk4VJHdVkq8Vhdw
+          `)
+          res.setHeader('Content-Type', 'application/json')
           res.setHeader('X-WhatsApp-Id', req.body.messages[0].id)
           res.send({
-            "preview_url": false | true,
+            "preview_url": false,
             "recipient_type": "individual",
             "to": req.body.messages[0].from,
             "type": "text",
