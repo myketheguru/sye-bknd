@@ -163,7 +163,7 @@ app.get('/', async (req, res) => {
     res.send(await getData(puNumber))
 })
 
-app.post('/webhook', async (req, res) => {
+app.post('/webhook', (req, res) => {
   console.log(req.body.messages[req.body.messages.length - 1].text.body, 'value');
   let puNumber = req.body.messages[req.body.messages.length - 1].text.body.split('/')
 
@@ -171,61 +171,62 @@ app.post('/webhook', async (req, res) => {
     res.status(200).json({message: 'OK'})
     sendMessage(req.body.messages[0].from, 'One moment while we fetch that information. \nType *Menu* to return to the main screen.')
 
-      let userResponse = await getData(puNumber)
-      if (userResponse.governor) {
-        let messageBody = `
-        Your PU Number is ${puNumber.join('')}
-
-        Your elected officials are:
-        
-        Your Governor
-        Name: ${userResponse.governor.name}
-        Party: ${userResponse.governor.party}
-        Phone: ${userResponse.governor.phone ?? 'N/A'}
-        Email: ${userResponse.governor.email ?? 'N/A'}
-        Twitter: ${userResponse.governor.twitter}
-        
-        Your Local Government Chairman
-        LGA: ${userResponse.local_government_chairman.area}
-        Name: ${userResponse.local_government_chairman.name}
-        Party: ${userResponse.local_government_chairman.party}
-        Phone: ${userResponse.local_government_chairman.phone}
-        
-        Your State Assembly Members
-        Area: ${userResponse.house_of_assembly[0].area}
-        Name: ${userResponse.house_of_assembly[0].name}
-        Party: ${userResponse.house_of_assembly[0].party}
-        Phone: ${userResponse.house_of_assembly[0].phone}
-        Email: ${userResponse.house_of_assembly[0].email}
-        
-        Area: ${userResponse.house_of_assembly[1]?.area ?? 'N/A'}
-        Name: ${userResponse.house_of_assembly[1]?.name ?? 'N/A'}
-        Party: ${userResponse.house_of_assembly[1]?.party ?? 'N/A'}
-        Phone: ${userResponse.house_of_assembly[1]?.phone ?? 'N/A'}
-        Email: ${userResponse.house_of_assembly[1]?.email ?? 'N/A'}
-        
-        Your Senator
-        Name: ${userResponse.senator.name}
-        Party: ${userResponse.senator.party}
-        Phone: ${userResponse.senator.phone ?? 'N/A'}
-        Email: ${userResponse.senator.email ?? 'N/A'}
-        Twitter: ${userResponse.senator.twitter}
-        
-        Your House of Reps. Member
-        Name: ${userResponse.house_of_representatives.name}
-        Party: ${userResponse.house_of_representatives.party}
-        Phone: ${userResponse.house_of_representatives.phone ?? 'N/A'}
-        Email: ${userResponse.house_of_representatives.email ?? 'N/A'}
-        
-        If your PU number is not available, visit www.shineyoureye.org
-        
-        Type Menu to go back to the main menu.
-        `;
-
-        // Send the message
-        sendMessage(req.body.messages[0].from, messageBody)
-        console.log('Msg sent');
-      } 
+      getData(puNumber).then(userResponse => {
+        if (userResponse.governor) {
+          let messageBody = `
+          Your PU Number is ${puNumber.join('')}
+  
+          Your elected officials are:
+          
+          Your Governor
+          Name: ${userResponse.governor.name}
+          Party: ${userResponse.governor.party}
+          Phone: ${userResponse.governor.phone ?? 'N/A'}
+          Email: ${userResponse.governor.email ?? 'N/A'}
+          Twitter: ${userResponse.governor.twitter}
+          
+          Your Local Government Chairman
+          LGA: ${userResponse.local_government_chairman.area}
+          Name: ${userResponse.local_government_chairman.name}
+          Party: ${userResponse.local_government_chairman.party}
+          Phone: ${userResponse.local_government_chairman.phone}
+          
+          Your State Assembly Members
+          Area: ${userResponse.house_of_assembly[0].area}
+          Name: ${userResponse.house_of_assembly[0].name}
+          Party: ${userResponse.house_of_assembly[0].party}
+          Phone: ${userResponse.house_of_assembly[0].phone}
+          Email: ${userResponse.house_of_assembly[0].email}
+          
+          Area: ${userResponse.house_of_assembly[1]?.area ?? 'N/A'}
+          Name: ${userResponse.house_of_assembly[1]?.name ?? 'N/A'}
+          Party: ${userResponse.house_of_assembly[1]?.party ?? 'N/A'}
+          Phone: ${userResponse.house_of_assembly[1]?.phone ?? 'N/A'}
+          Email: ${userResponse.house_of_assembly[1]?.email ?? 'N/A'}
+          
+          Your Senator
+          Name: ${userResponse.senator.name}
+          Party: ${userResponse.senator.party}
+          Phone: ${userResponse.senator.phone ?? 'N/A'}
+          Email: ${userResponse.senator.email ?? 'N/A'}
+          Twitter: ${userResponse.senator.twitter}
+          
+          Your House of Reps. Member
+          Name: ${userResponse.house_of_representatives.name}
+          Party: ${userResponse.house_of_representatives.party}
+          Phone: ${userResponse.house_of_representatives.phone ?? 'N/A'}
+          Email: ${userResponse.house_of_representatives.email ?? 'N/A'}
+          
+          If your PU number is not available, visit www.shineyoureye.org
+          
+          Type Menu to go back to the main menu.
+          `;
+  
+          // Send the message
+          sendMessage(req.body.messages[0].from, messageBody)
+          console.log('Msg sent');
+        } 
+      })
 
   } else {
     res.status(200).json({message: 'OK'})
