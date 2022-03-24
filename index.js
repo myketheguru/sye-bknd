@@ -123,9 +123,9 @@ async function getData (puNumber, doneFn) {
       rep = allReps.find(rep => rep?.area?.place?.name?.includes(localGovt))
 
       // Deriving the representative
-      userResponse.house_of_representatives.name = rep.name
+      userResponse.house_of_representatives.name = rep?.name
       userResponse.house_of_representatives.area = rep?.area?.place?.name
-      userResponse.house_of_representatives.party = `${rep.party} (${abbreviate(rep.party)})`
+      userResponse.house_of_representatives.party = `${rep?.party} (${abbreviate(rep?.party)})`
       userResponse.house_of_representatives.phone = rep?.contact?.phone?.value
       userResponse.house_of_representatives.email = rep?.contact?.email?.value
 
@@ -138,9 +138,9 @@ async function getData (puNumber, doneFn) {
       // Derive State Assembly info
       let final = assembly.map(obj => {
         return {
-          name: obj.name,
+          name: obj?.name,
           area: obj?.area?.place?.name,
-          party: `${obj.party} (${abbreviate(obj.party)})`,
+          party: `${obj.party} (${abbreviate(obj?.party)})`,
           phone: obj?.contact?.phone?.value,
           email: obj?.contact?.email?.value,
         }
