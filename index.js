@@ -48,6 +48,8 @@ async function getLGTHeads (state = '') {
   return response.data.data.people
 }
 
+
+
 function abbreviate (phrase, delimiter = '') {
   return phrase.split(' ').map(word => word.slice(0, 1)).join(delimiter)
 }
@@ -155,6 +157,11 @@ async function getData (puNumber, doneFn) {
   }) 
 }
 
+async function getPuInfo (puNumber) {
+  let response = await axios.get(`https://shineyoureye.org/lookup?lookup?=${puNumber}`)
+  return response.data.states[0].id
+}
+
 app.get('/', async (req, res) => {
     let puNumber = req.query.pu.split('/')
     res.send(await getData(puNumber))
@@ -162,13 +169,16 @@ app.get('/', async (req, res) => {
 
 app.post('/webhook', (req, res) => {
   console.log(req.body.messages[req.body.messages.length - 1].text.body, 'value');
-  let puNumber = req.body.messages[req.body.messages.length - 1].text.body.split('/')
+  let puNumber = req.body.messages[req.body.messages.length - 1].text.body.split(/[,.:-/\s]/)
 
   if (puNumber.length === 4 && puNumber.every(num => !Number.isNaN(parseFloat(num)))) {
     res.status(200).json({message: 'OK'})
     sendMessage(req.body.messages[0].from, 'One moment while we fetch that information. \nType *Menu* to return to the main screen.')
 
-      getData(puNumber, (userResponse) => {
+    getPuInfo(puNumber).then(id => {
+      let pu = [id, ...puNumber.slice(1)]
+      
+      getData(pu, (userResponse) => {
         // if (userResponse.governor) {
           let messageBody = `
           Your PU Number is ${puNumber.join('/')}
@@ -223,11 +233,12 @@ app.post('/webhook', (req, res) => {
           // Send the message
           sendMessage(req.body.messages[0].from, messageBody)
           console.log('Msg sent');
-        // } 
-        console.log(userResponse, 'This is the f***king response')
-        console.log(messageBody, 'This is the f***king message')
+          // } 
+          console.log(userResponse, 'This is the f***king response')
+          console.log(messageBody, 'This is the f***king message')
+        })
       })
-
+        
   } else {
     res.status(200).json({message: 'OK'})
     sendMessage(req.body.messages[0].from, 'We could not get any data for this PU Number. Please check to see if the PU number you entered is correct')
