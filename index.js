@@ -158,7 +158,7 @@ async function getData (puNumber, doneFn) {
 }
 
 async function getPuInfo (puNumber) {
-  let response = await axios.get(`https://shineyoureye.org/lookup?lookup?=${puNumber}`)
+  let response = await axios.get(`https://shineyoureye.org/lookup?lookup=${puNumber}`)
   return response.data.states[0].id
 }
 
