@@ -175,7 +175,7 @@ app.post('/webhook', (req, res) => {
     res.status(200).json({message: 'OK'})
     sendMessage(req.body.messages[0].from, 'One moment while we fetch that information. \nType *Menu* to return to the main screen.')
 
-    getPuInfo(puNumber).then(id => {
+    getPuInfo(puNumber.join('/')).then(id => {
       let pu = [id, ...puNumber.slice(1)]
       
       getData(pu, (userResponse) => {
