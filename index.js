@@ -50,7 +50,7 @@ async function getLGTHeads (state = '') {
 
 
 
-function abbreviate (phrase, delimiter = '') {
+function abbreviate (phrase = '', delimiter = '') {
   return phrase.split(' ').map(word => word.slice(0, 1)).join(delimiter)
 }
 
