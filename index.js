@@ -159,7 +159,7 @@ async function getData (puNumber, doneFn) {
 
 async function getPuInfo (puNumber) {
   let response = await axios.get(`https://shineyoureye.org/lookup?lookup=${puNumber}`)
-  return response.data.states[0].id
+  return response.data.senatorial_districts[0].parent_area
 }
 
 app.get('/', async (req, res) => {
