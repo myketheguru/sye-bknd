@@ -91,16 +91,16 @@ async function getData (puNumber, doneFn) {
     getLGTHeads(state).then(data => {
       // Sort and conquer data
       let stateOfficials = (data.map((obj, i) => obj.persons[state])).flat(2)
-      let localMan = stateOfficials.find(person => person?.area?.place?.codes?.poll_unit?.includes(puNumber[1]))
+      let localMan = stateOfficials.find(person => person?.area?.place?.codes?.poll_unit?.includes(+puNumber[1].toString()))
 
       // store a reference
       lgtMan = localMan
       localGovt = localMan?.area?.place?.name
 
       // Derive Local Government Chairman
-      userResponse.local_government_chairman.name = localMan.name
+      userResponse.local_government_chairman.name = localMan?.name
       userResponse.local_government_chairman.area = localGovt
-      userResponse.local_government_chairman.party = `${localMan.party} (${abbreviate(localMan.party)})`
+      userResponse.local_government_chairman.party = `${localMan?.party} (${abbreviate(localMan?.party)})`
       userResponse.local_government_chairman.phone = localMan?.contact?.phone?.value
 
       // Sort and conquer data
@@ -108,9 +108,9 @@ async function getData (puNumber, doneFn) {
       senator = stateOfficials.find(person => person?.area?.place?.name === senatorialDestrict)
       
       // Deriving the senator
-      userResponse.senator.name = senator.name
+      userResponse.senator.name = senator?.name
       userResponse.senator.district = senatorialDestrict
-      userResponse.senator.party = `${senator.party} (${abbreviate(senator.party)})`
+      userResponse.senator.party = `${senator?.party} (${abbreviate(senator?.party)})`
       userResponse.senator.phone = senator?.contact?.phone?.value
       userResponse.senator.email = senator?.contact?.email?.value
       userResponse.senator.twitter = senator?.contact?.twitter?.value
