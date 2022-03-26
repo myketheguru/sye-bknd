@@ -45,6 +45,7 @@ async function getGovernors () {
 
 async function getLGTHeads (state = '') {
   let response = await axios.get(`${baseURL}/people/states/${state}`)
+  console.log(response.data.data.people.length);
   return response.data.data.people
 }
 
