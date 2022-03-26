@@ -180,7 +180,7 @@ app.post('/webhook', (req, res) => {
       
       getData(pu, (userResponse) => {
         // if (userResponse.governor) {
-          let messageBody = `Your PU Number is ${puNumber.join('-')}\n\n_***Your elected officials are:***_`
+          let messageBody = `Your PU Number is ${puNumber.join('-')}\n\n_**Your elected officials are:**_\n\n`
 
           let gMsg = `\n*Your Governor*\n*Name:* ${userResponse?.governor?.name}\n*Party:* ${userResponse?.governor?.party}\n*Phone:* ${userResponse?.governor?.phone ?? 'Not Available'}\n*Email:* ${userResponse?.governor?.email ?? 'Not Available'}\n*Twitter:* ${userResponse?.governor?.twitter}\n\n`
 
