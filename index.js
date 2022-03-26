@@ -192,7 +192,7 @@ app.post('/webhook', (req, res) => {
 
           let shAssemblyMsg = userResponse?.house_of_assembly?.map((person, index) => {
             return `*Your State Assembly Member* (${index + 1})\n*Name:* ${person?.name}\n*Area:* ${person?.area}\n*Party:* ${person?.party}\n*Phone:* ${person?.phone}\n*Email:* ${person?.email}\n\n`
-          });
+          }).join('');
 
           let senMsg = `*Your Senator*\n*Name:* ${userResponse?.senator?.name}\n*Party:* ${userResponse?.senator?.party}\n*Phone:* ${userResponse?.senator?.phone ?? 'Not Available'}\n*Email:* ${userResponse?.senator?.email ?? 'Not Available'}\n*Twitter:* ${userResponse?.senator?.twitter}\n\n`
 
