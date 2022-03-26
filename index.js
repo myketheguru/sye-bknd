@@ -57,6 +57,7 @@ function abbreviate (phrase = '', delimiter = '') {
 async function getData (params, doneFn) {
   let puNumber = params.pu
   let lga = params.lgt
+  let lgaID = params.id
 
   let governor = null
   let lgtMan = null
@@ -92,7 +93,7 @@ async function getData (params, doneFn) {
     getLGTHeads(state).then(data => {
       // Sort and conquer data
       let stateOfficials = (data.map((obj, i) => obj.persons[state])).flat(2)
-      let localMan = stateOfficials.find(person => person?.area?.place?.codes?.poll_unit?.includes(+puNumber[1].toString()) && person?.area?.place?.name === lga && person?.area?.place?.type === 'LGA')
+      let localMan = stateOfficials.find(person => person?.area?.place?.codes?.poll_unit?.includes(+puNumber[1].toString()) && person?.area?.place?.name === lga && person?.area?.place?.id === lgaID)
 
       // store a reference
       lgtMan = localMan
@@ -160,7 +161,7 @@ async function getData (params, doneFn) {
 
 async function getPuInfo (puNumber) {
   let response = await axios.get(`https://shineyoureye.org/lookup?lookup=${puNumber}`)
-  return [response.data.senatorial_districts[0].parent_area, response.data.area.name]
+  return [response.data.senatorial_districts[0].parent_area, response.data.area.name, response.data.area.id]
 }
 
 app.get('/', async (req, res) => {
@@ -176,10 +177,10 @@ app.post('/webhook', (req, res) => {
     res.status(200).json({message: 'OK'})
     sendMessage(req.body.messages[0].from, 'One moment while we fetch that information. \nType *Menu* to return to the main screen.')
 
-    getPuInfo(puNumber.join('/')).then(([id, lgt]) => {
+    getPuInfo(puNumber.join('/')).then(([id, lgt, lgtID]) => {
       let pu = [id, ...puNumber.slice(1)]
       
-      getData({pu, lgt}, (userResponse) => {
+      getData({pu, lgt, id: lgtID}, (userResponse) => {
         // if (userResponse.governor) {
           let messageBody = `Your PU Number is ${puNumber.join('-')}\n\n_Your elected officials are:_\n`
 
