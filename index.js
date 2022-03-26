@@ -180,7 +180,7 @@ app.post('/webhook', (req, res) => {
       
       getData(pu, (userResponse) => {
         // if (userResponse.governor) {
-          let messageBody = `Your PU Number is ${puNumber.join('-')}\n\n_**Your elected officials are:**_\n\n`
+          let messageBody = `Your PU Number is ${puNumber.join('-')}\n\n_Your elected officials are:_\n`
 
           let gMsg = `\n*Your Governor*\n*Name:* ${userResponse?.governor?.name}\n*Party:* ${userResponse?.governor?.party}\n*Phone:* ${userResponse?.governor?.phone ?? 'Not Available'}\n*Email:* ${userResponse?.governor?.email ?? 'Not Available'}\n*Twitter:* ${userResponse?.governor?.twitter}\n\n`
 
@@ -196,15 +196,15 @@ app.post('/webhook', (req, res) => {
 
           let extraMsg = `If your PU number is not available, visit www.shineyoureye.org\n\nType *Menu* to go back to the main menu.`
 
-          let msgPipeline = [messageBody, gMsg, lgMsg, shAssemblyMsg, senMsg, repsMsg].join('---------------\n')
+          let msgPipeline = [messageBody, gMsg, lgMsg, shAssemblyMsg, senMsg, repsMsg].join('----------------------------\n')
   
           // Send the message
           sendMessage(req.body.messages[0].from, msgPipeline)
           sendMessage(req.body.messages[0].from, extraMsg)
           console.log('Msg sent');
           // } 
-          console.log(userResponse, 'This is the f***king response')
-          console.log(msgPipeline, 'This is the f***king message')
+          // console.log(userResponse, 'This is the f***king response')
+          // console.log(msgPipeline, 'This is the f***king message')
         })
       })
         
@@ -233,7 +233,7 @@ function sendMessage(contact_id, content) {
           }
       })
       .then(response => {
-          console.log(response.data, 'Response Recieved')
+          console.log(response.data.messages, 'Response Recieved')
       })
       .catch(err => {
           // console.log(err);
@@ -242,7 +242,8 @@ function sendMessage(contact_id, content) {
   
 
 /* istanbul ignore next */
+const port = process.env.PORT || 5000
 if (!module.parent) {
-  app.listen(process.env.PORT || 5000);
-  console.log('Express started on port 5000');
+  app.listen(port);
+  console.log(`Express started on port ${port}`);
 }
