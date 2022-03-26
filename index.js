@@ -96,6 +96,7 @@ async function getData (params, doneFn) {
         return obj.persons[state]
       }).flat(1)
       let localMan = allLGHeads.find(person => person?.area?.place?.name === lga)
+      console.log(localMan);
 
       // store a reference
       lgtMan = localMan
