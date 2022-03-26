@@ -92,7 +92,7 @@ async function getData (params, doneFn) {
     getLGTHeads(state).then(data => {
       // Sort and conquer data
       let stateOfficials = (data.map((obj, i) => obj.persons[state])).flat(2)
-      let localMan = stateOfficials.find(person => person?.area?.place?.codes?.poll_unit?.includes(+puNumber[1].toString()) && person?.area?.place?.name === lga)
+      let localMan = stateOfficials.find(person => person?.area?.place?.codes?.poll_unit?.includes(+puNumber[1].toString()) && person?.area?.place?.name === lga && person?.area?.place?.type === 'LGA')
 
       // store a reference
       lgtMan = localMan
