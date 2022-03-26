@@ -45,7 +45,6 @@ async function getGovernors () {
 
 async function getLGTHeads (state = '') {
   let response = await axios.get(`${baseURL}/people/states/${state}`)
-  console.log(response.data.data.people.length);
   return response.data.data.people
 }
 
@@ -93,10 +92,7 @@ async function getData (params, doneFn) {
     getLGTHeads(state).then(data => {
       // Sort and conquer data
       let stateOfficials = (data.map((obj, i) => obj.persons[state])).flat(2)
-      let allLGHeads = (data.filter(obj => obj.organization === 'House of Representatives')).map(obj => {
-        return obj.persons[state]
-      }).flat(1)
-      let localMan = stateOfficials.find(person => person?.area?.place?.name === lga)
+      let localMan = stateOfficials.find(person => person?.area?.place?.codes?.poll_unit?.includes(+puNumber[1].toString()))
 
       // store a reference
       lgtMan = localMan
