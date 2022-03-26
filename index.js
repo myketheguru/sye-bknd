@@ -207,8 +207,8 @@ app.post('/webhook', (req, res) => {
           sendMessage(req.body.messages[0].from, extraMsg)
           console.log('Msg sent');
           // } 
-          // console.log(userResponse, 'This is the f***king response')
-          // console.log(msgPipeline, 'This is the f***king message')
+          console.log(userResponse, 'This is the f***king response')
+          console.log(msgPipeline, 'This is the f***king message')
         })
       })
         
