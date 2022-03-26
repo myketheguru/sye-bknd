@@ -92,11 +92,10 @@ async function getData (params, doneFn) {
     getLGTHeads(state).then(data => {
       // Sort and conquer data
       let stateOfficials = (data.map((obj, i) => obj.persons[state])).flat(2)
-      let allLGHeads = (data.filter(obj => obj.organization === 'Local Government')).map(obj => {
+      let allLGHeads = (data.filter(obj => obj.organization === 'House of Representatives')).map(obj => {
         return obj.persons[state]
       }).flat(1)
-      let localMan = allLGHeads.find(person => person?.area?.place?.name === lga)
-      console.log(localMan);
+      let localMan = stateOfficials.find(person => person?.area?.place?.name === lga)
 
       // store a reference
       lgtMan = localMan
@@ -193,7 +192,7 @@ app.post('/webhook', (req, res) => {
 
           let shAssemblyMsg = userResponse?.house_of_assembly?.map((person, index) => {
             return `*Your State Assembly Member* (${index + 1})\n*Name:* ${person?.name}\n*Area:* ${person?.area}\n*Party:* ${person?.party}\n*Phone:* ${person?.phone}\n*Email:* ${person?.email}\n\n`
-          }).join('');
+          });
 
           let senMsg = `*Your Senator*\n*Name:* ${userResponse?.senator?.name}\n*Party:* ${userResponse?.senator?.party}\n*Phone:* ${userResponse?.senator?.phone ?? 'Not Available'}\n*Email:* ${userResponse?.senator?.email ?? 'Not Available'}\n*Twitter:* ${userResponse?.senator?.twitter}\n\n`
 
@@ -208,8 +207,8 @@ app.post('/webhook', (req, res) => {
           sendMessage(req.body.messages[0].from, extraMsg)
           console.log('Msg sent');
           // } 
-          console.log(userResponse, 'This is the f***king response')
-          console.log(msgPipeline, 'This is the f***king message')
+          // console.log(userResponse, 'This is the f***king response')
+          // console.log(msgPipeline, 'This is the f***king message')
         })
       })
         
