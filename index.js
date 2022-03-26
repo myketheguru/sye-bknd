@@ -92,7 +92,10 @@ async function getData (params, doneFn) {
     getLGTHeads(state).then(data => {
       // Sort and conquer data
       let stateOfficials = (data.map((obj, i) => obj.persons[state])).flat(2)
-      let localMan = stateOfficials.find(person => person?.area?.place?.name === lga)
+      let allLGHeads = (data.filter(obj => obj.organization === 'Local Government')).map(obj => {
+        return obj.persons[state]
+      }).flat(1)
+      let localMan = allLGHeads.find(person => person?.area?.place?.name === lga)
 
       // store a reference
       lgtMan = localMan
