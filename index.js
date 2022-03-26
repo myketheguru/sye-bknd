@@ -180,14 +180,31 @@ app.post('/webhook', (req, res) => {
       
       getData(pu, (userResponse) => {
         // if (userResponse.governor) {
-          let messageBody = `Your PU Number is ${puNumber.join('/')}\n\nYour elected officials are:\nYour Governor\nName: ${userResponse?.governor?.name}\nParty: ${userResponse?.governor?.party}\nPhone: ${userResponse?.governor?.phone ?? 'N/A'}\nEmail: ${userResponse?.governor?.email ?? 'N/A'}\nTwitter: ${userResponse?.governor?.twitter}\n\nYour Local Government Chairman\nLGA: ${userResponse?.local_government_chairman?.area}\nName: ${userResponse?.local_government_chairman?.name}\nParty: ${userResponse?.local_government_chairman?.party}\nPhone: ${userResponse?.local_government_chairman?.phone}\n\nYour State Assembly Member (1)\nArea: ${userResponse?.house_of_assembly[0]?.area}\nName: ${userResponse?.house_of_assembly[0]?.name}\nParty: ${userResponse?.house_of_assembly[0]?.party}\nPhone: ${userResponse?.house_of_assembly[0]?.phone}\nEmail: ${userResponse?.house_of_assembly[0]?.email}\n\nYour State Assembly Member (2)\nArea: ${userResponse?.house_of_assembly[1]?.area ?? 'N/A'}\nName: ${userResponse?.house_of_assembly[1]?.name ?? 'N/A'}\nParty: ${userResponse?.house_of_assembly[1]?.party ?? 'N/A'}\nPhone: ${userResponse?.house_of_assembly[1]?.phone ?? 'N/A'}\nEmail: ${userResponse?.house_of_assembly[1]?.email ?? 'N/A'}\n\nYour Senator\nName: ${userResponse?.senator?.name}\nParty: ${userResponse?.senator?.party}\nPhone: ${userResponse?.senator?.phone ?? 'N/A'}\nEmail: ${userResponse?.senator?.email ?? 'N/A'}\nTwitter: ${userResponse?.senator?.twitter}\n\nYour House of Reps. Member\nName: ${userResponse?.house_of_representatives?.name}\nParty: ${userResponse?.house_of_representatives?.party}\nPhone: ${userResponse?.house_of_representatives?.phone ?? 'N/A'}\nEmail: ${userResponse?.house_of_representatives?.email ?? 'N/A'}\n\nIf your PU number is not available, visit www.shineyoureye.org\n\nType *Menu* to go back to the main menu.`;
+          let messageBody = `Your PU Number is ${puNumber.join('-')}\n\n_***Your elected officials are:***_`
+
+          let gMsg = `\n*Your Governor*\n*Name:* ${userResponse?.governor?.name}\n*Party:* ${userResponse?.governor?.party}\n*Phone:* ${userResponse?.governor?.phone ?? 'Not Available'}\n*Email:* ${userResponse?.governor?.email ?? 'Not Available'}\n*Twitter:* ${userResponse?.governor?.twitter}\n\n`
+
+          let lgMsg = `*Your Local Government Chairman*\n*LGA:* ${userResponse?.local_government_chairman?.area}\n*Name:* ${userResponse?.local_government_chairman?.name}\n*Party:* ${userResponse?.local_government_chairman?.party}\n*Phone:* ${userResponse?.local_government_chairman?.phone}\n\n`
+
+          let shAssemblyMsg = userResponse?.house_of_assembly?.map((person, index) => {
+            return `*Your State Assembly Member* (${index + 1})\n*Name:* ${person?.name}\n*Area:* ${person?.area}\n*Party:* ${person?.party}\n*Phone:* ${person?.phone}\n*Email:* ${person?.email}\n\n`
+          });
+
+          let senMsg = `*Your Senator*\n*Name:* ${userResponse?.senator?.name}\n*Party:* ${userResponse?.senator?.party}\n*Phone:* ${userResponse?.senator?.phone ?? 'Not Available'}\n*Email:* ${userResponse?.senator?.email ?? 'Not Available'}\n*Twitter:* ${userResponse?.senator?.twitter}\n\n`
+
+          let repsMsg = `*Your House of Reps. Member*\n*Name:* ${userResponse?.house_of_representatives?.name}\n*Party:* ${userResponse?.house_of_representatives?.party}\n*Phone:* ${userResponse?.house_of_representatives?.phone ?? 'Not Available'}\n*Email:* ${userResponse?.house_of_representatives?.email ?? 'Not Available'}\n\n`;
+
+          let extraMsg = `If your PU number is not available, visit www.shineyoureye.org\n\nType *Menu* to go back to the main menu.`
+
+          let msgPipeline = [messageBody, gMsg, lgMsg, shAssemblyMsg, senMsg, repsMsg].join('---------------\n')
   
           // Send the message
-          sendMessage(req.body.messages[0].from, messageBody)
+          sendMessage(req.body.messages[0].from, msgPipeline)
+          sendMessage(req.body.messages[0].from, extraMsg)
           console.log('Msg sent');
           // } 
           console.log(userResponse, 'This is the f***king response')
-          console.log(messageBody, 'This is the f***king message')
+          console.log(msgPipeline, 'This is the f***king message')
         })
       })
         
